@@ -17,54 +17,79 @@ namespace Receptsnurran
         {
             InitializeComponent();
             this.StartPosition = FormStartPosition.CenterScreen;
-            textBoxLastPrescriptionDate.KeyDown += TextBox_KeyDown;
-            textBoxTotalTablets.KeyDown += TextBox_KeyDown;
-            textBoxDailyDosage.KeyDown += TextBox_KeyDown;
+            textBoxLastPrescriptionDate.TextChanged += TextBox_TextChanged;
+            textBoxTotalTablets.TextChanged += TextBox_TextChanged;
+            textBoxDailyDosage.TextChanged += TextBox_TextChanged;
         }
         private void TextBox_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
-                calculate();
-                e.Handled = true; // Prevents the 'ding' sound
-                e.SuppressKeyPress = true; // Suppresses the Enter key press
+                calculateAndDisplay();
+                e.Handled = true;
+                e.SuppressKeyPress = true;
             }
         }
 
         private void buttonCalculate_Click(object sender, EventArgs e)
         {
-            calculate();
+            calculateAndDisplay();
         }
 
-        private void calculate()
+        private void TextBox_TextChanged(object sender, EventArgs e)
+        {
+            calculateAndDisplay();
+        }
+
+        private string calculate()
         {
             string format = "yyMMdd";
             try
             {
-                DateTime lastPrescriptionDate = DateTime.ParseExact(textBoxLastPrescriptionDate.Text, format, CultureInfo.InvariantCulture);
-                int totalTablets = int.Parse(textBoxTotalTablets.Text);
-                int dailyDosage = int.Parse(textBoxDailyDosage.Text);
+                if (!DateTime.TryParseExact(textBoxLastPrescriptionDate.Text, format, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime lastPrescriptionDate))
+                    return "Ogiltigt datum";
 
-                // Beräkna hur länge läkemedlet borde räcka
+                if (!int.TryParse(textBoxTotalTablets.Text, out int totalTablets) || totalTablets <= 0)
+                    return "Ogiltigt antal tabletter";
+
+                if (!int.TryParse(textBoxDailyDosage.Text, out int dailyDosage) || dailyDosage <= 0)
+                    return "Ogiltig daglig dos";
+
                 int daysMedicationShouldLast = totalTablets / dailyDosage;
                 DateTime expectedEndDate = lastPrescriptionDate.AddDays(daysMedicationShouldLast);
 
-                // Determine whether to use "räcka" or "räckt"
                 string verb = DateTime.Now > expectedEndDate ? "räckt" : "räcka";
 
-                // Beräkna hur många tabletter patienten tagit per dag i genomsnitt om läkemedlet är slut nu
                 int daysSincePrescription = (DateTime.Now - lastPrescriptionDate).Days;
                 double averageDailyIntake = (double)totalTablets / daysSincePrescription;
+                string averageDailyIntakeMessage;
+                string averageDailyConsumption = "Genomsnittlig daglig konsumtion om läkemedlet är slut nu:";
+                if (Math.Abs(averageDailyIntake - dailyDosage) < 0.05) // Within 0.05 of prescribed dosage
+                {
+                    averageDailyIntakeMessage = $"{averageDailyConsumption} \n{averageDailyIntake:F2} tabletter per dag";
+                }
+                else if (averageDailyIntake < dailyDosage)
+                {
+                    averageDailyIntakeMessage = $"{averageDailyConsumption} \n{averageDailyIntake:F2} tabletter per dag (LÄGRE än ordinerad dos)";
+                }
+                else
+                {
+                    averageDailyIntakeMessage = $"{averageDailyConsumption} \n{averageDailyIntake:F2} tabletter per dag (HÖGRE än ordinerad dos)";
+                }
 
-                string result = $"Läkemedlet borde {verb} till: {expectedEndDate.ToShortDateString()} ({daysMedicationShouldLast} dagar)\n\n" +
-                                $"Genomsnittlig daglig konsumtion om läkemedlet är slut nu: \n{averageDailyIntake:F2} tabletter per dag";
-
-                MessageBox.Show(result, "Resultat");
+                return $"Läkemedlet borde {verb} till: {expectedEndDate.ToShortDateString()} ({daysMedicationShouldLast} dagar)\n\n" +
+                       $"{averageDailyIntakeMessage}";
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                MessageBox.Show("Något gick fel vid bearbetning av inmatning:\n" + ex.Message, "Fel", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return "Ogiltig inmatning";
             }
+        }
+
+        private void calculateAndDisplay()
+        {
+            string result = calculate();
+            richTextBoxResult.Text = result;
         }
 
         private void Receptsnurran_Load(object sender, EventArgs e)

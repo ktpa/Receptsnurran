@@ -36,8 +36,8 @@ namespace Receptsnurran
             this.textBoxLastPrescriptionDate = new System.Windows.Forms.TextBox();
             this.textBoxTotalTablets = new System.Windows.Forms.TextBox();
             this.textBoxDailyDosage = new System.Windows.Forms.TextBox();
-            this.buttonCalculate = new System.Windows.Forms.Button();
             this.itkalle = new System.Windows.Forms.Label();
+            this.richTextBoxResult = new System.Windows.Forms.RichTextBox();
             this.SuspendLayout();
             // 
             // label2
@@ -69,52 +69,51 @@ namespace Receptsnurran
             // 
             // textBoxLastPrescriptionDate
             // 
-            this.textBoxLastPrescriptionDate.Location = new System.Drawing.Point(202, 12);
+            this.textBoxLastPrescriptionDate.Location = new System.Drawing.Point(230, 12);
             this.textBoxLastPrescriptionDate.Name = "textBoxLastPrescriptionDate";
             this.textBoxLastPrescriptionDate.Size = new System.Drawing.Size(82, 20);
             this.textBoxLastPrescriptionDate.TabIndex = 4;
             // 
             // textBoxTotalTablets
             // 
-            this.textBoxTotalTablets.Location = new System.Drawing.Point(202, 38);
+            this.textBoxTotalTablets.Location = new System.Drawing.Point(230, 38);
             this.textBoxTotalTablets.Name = "textBoxTotalTablets";
             this.textBoxTotalTablets.Size = new System.Drawing.Size(82, 20);
             this.textBoxTotalTablets.TabIndex = 5;
             // 
             // textBoxDailyDosage
             // 
-            this.textBoxDailyDosage.Location = new System.Drawing.Point(202, 64);
+            this.textBoxDailyDosage.Location = new System.Drawing.Point(230, 64);
             this.textBoxDailyDosage.Name = "textBoxDailyDosage";
             this.textBoxDailyDosage.Size = new System.Drawing.Size(82, 20);
             this.textBoxDailyDosage.TabIndex = 6;
-            // 
-            // buttonCalculate
-            // 
-            this.buttonCalculate.Location = new System.Drawing.Point(115, 84);
-            this.buttonCalculate.Name = "buttonCalculate";
-            this.buttonCalculate.Size = new System.Drawing.Size(75, 23);
-            this.buttonCalculate.TabIndex = 7;
-            this.buttonCalculate.Text = "Beräkna";
-            this.buttonCalculate.UseVisualStyleBackColor = true;
-            this.buttonCalculate.Click += new System.EventHandler(this.buttonCalculate_Click);
             // 
             // itkalle
             // 
             this.itkalle.AutoSize = true;
             this.itkalle.ForeColor = System.Drawing.SystemColors.ButtonShadow;
-            this.itkalle.Location = new System.Drawing.Point(250, 97);
+            this.itkalle.Location = new System.Drawing.Point(278, 151);
             this.itkalle.Name = "itkalle";
             this.itkalle.Size = new System.Drawing.Size(34, 13);
             this.itkalle.TabIndex = 8;
             this.itkalle.Text = "itkalle";
             // 
+            // richTextBoxResult
+            // 
+            this.richTextBoxResult.Location = new System.Drawing.Point(15, 89);
+            this.richTextBoxResult.Name = "richTextBoxResult";
+            this.richTextBoxResult.ReadOnly = true;
+            this.richTextBoxResult.Size = new System.Drawing.Size(297, 59);
+            this.richTextBoxResult.TabIndex = 9;
+            this.richTextBoxResult.Text = "";
+            // 
             // Receptsnurran
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(296, 119);
+            this.ClientSize = new System.Drawing.Size(324, 170);
+            this.Controls.Add(this.richTextBoxResult);
             this.Controls.Add(this.itkalle);
-            this.Controls.Add(this.buttonCalculate);
             this.Controls.Add(this.textBoxDailyDosage);
             this.Controls.Add(this.textBoxTotalTablets);
             this.Controls.Add(this.textBoxLastPrescriptionDate);
@@ -137,9 +136,9 @@ namespace Receptsnurran
         private System.Windows.Forms.TextBox textBoxLastPrescriptionDate;
         private System.Windows.Forms.TextBox textBoxTotalTablets;
         private System.Windows.Forms.TextBox textBoxDailyDosage;
-        private Button buttonCalculate;
         private System.Windows.Forms.Button ButtonCalculate;
         private Label itkalle;
+        private RichTextBox richTextBoxResult;
     }
 }
 
