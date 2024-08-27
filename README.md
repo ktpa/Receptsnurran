@@ -1,9 +1,9 @@
 # Receptsnurran
 
-This tool helps healthcare professionals and patients:
+Detta verktyg hjälper vårdpersonal och patienter att:
 
-- Calculate how long a prescription should last
-- Determine the expected end date of medication
-- Estimate average daily intake if medication is depleted
+- Beräkna hur länge ett recept bör räcka
+- Fastställa det förväntade slutdatumet för medicineringen
+- Uppskatta genomsnittlig daglig konsumtion om medicinen är slut
 
-Simply input the last prescription date, total tablets, and daily dosage to get instant results. Ideal for monitoring medication adherence and planning refills.
+Ange datum för senaste receptet, totalt antal tabletter och daglig dos för att få omedelbara resultat. Idealiskt för att övervaka följsamhet till medicinering och planera påfyllningar.
