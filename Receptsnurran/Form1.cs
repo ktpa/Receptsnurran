@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Globalization;
+using System.Diagnostics;
 
 namespace Receptsnurran
 {
@@ -63,7 +64,7 @@ namespace Receptsnurran
                 int daysSincePrescription = (DateTime.Now - lastPrescriptionDate).Days;
                 double averageDailyIntake = (double)totalTablets / daysSincePrescription;
                 string averageDailyIntakeMessage;
-                string averageDailyConsumption = "Genomsnittlig daglig konsumtion om läkemedlet är slut nu:";
+                string averageDailyConsumption = "Genomsnittlig konsumtion om läkemedlet är slut nu:";
                 if (Math.Abs(averageDailyIntake - dailyDosage) < 0.05) // Within 0.05 of prescribed dosage
                 {
                     averageDailyIntakeMessage = $"{averageDailyConsumption} \n{averageDailyIntake:F2} tabletter per dag";
@@ -95,6 +96,19 @@ namespace Receptsnurran
         private void Receptsnurran_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void itkalle_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string url = "https://github.com/ktpa/Receptsnurran/";
+                Process.Start(new ProcessStartInfo(url) { UseShellExecute = true });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Det gick inte att öppna länken: {ex.Message}", "Fel", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

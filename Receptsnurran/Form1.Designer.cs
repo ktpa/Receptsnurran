@@ -97,6 +97,7 @@ namespace Receptsnurran
             this.itkalle.Size = new System.Drawing.Size(34, 13);
             this.itkalle.TabIndex = 8;
             this.itkalle.Text = "itkalle";
+            this.itkalle.Click += new System.EventHandler(this.itkalle_Click);
             // 
             // richTextBoxResult
             // 
